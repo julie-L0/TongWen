@@ -16,7 +16,7 @@ delete process.env.DEEPSEEK_REASONING_EFFORT;
 const db=path.join(process.env.WORKSPACE_STATE_DIR,'workspace-v2.sqlite');
 try{await fs.access(db);}catch(e){
   if(e.code!=='ENOENT')throw e;
-  const seed=JSON.parse(await fs.readFile(path.join(root,'examples/two-paragraphs.json'),'utf8'));
+  const seed=JSON.parse(await fs.readFile(path.join(root,'examples/confirmed-relation-documents.json'),'utf8'));
   const store=new SQLiteStore(db);
   try{new Workspace(store).importDocuments({scopeName:'关系复用·个人原型两段演示',requestId:uid(),files:seed.files});}
   finally{store.close();}
