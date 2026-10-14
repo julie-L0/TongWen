@@ -1,0 +1,70 @@
+[
+  {
+    "kind": "initial",
+    "strategyVersion": "semantic-agent-0.26.23-candidate",
+    "executionIdentity": {
+      "packId": "scoped-clauses",
+      "strategyFingerprint": "7a1299acbc335d1f3242a3d86c874a70446c2263da056f21c30aaae846abf6da",
+      "promptHash": "f406d08e1af35192abfa18cad659a3cdee4c71ea8a3ecb7c2ae4f5007644ea3d",
+      "assets": [
+        {
+          "file": "system.md",
+          "hash": "e62c9d5b36fccde2d94677bae1a20e4653547acf017238a2c774cd442fac5b47"
+        },
+        {
+          "file": "local-change.md",
+          "hash": "79f4734402c94a4ae28c4985d015165a4debe0de3cc38fe0adcf9d2a33d99d42"
+        },
+        {
+          "file": "efficient-investigation.md",
+          "hash": "1e839a521c12e827aab3c6aa09d56e69144d7944ab904cf715db7a970cf418e1"
+        },
+        {
+          "file": "scoped-clauses.md",
+          "hash": "73d6c21cf20fe6ca7604382a35494b8a9b34fd4acbbb7aec28f4f8e6aaafa0f6"
+        }
+      ],
+      "toolSchemaHash": "a7c667df841ceb96782b265830794df2b0e789031a99c290e13b20ad30280c7b",
+      "codeHash": "05975dc0a88f616566753c9bbbbb5fc04ad9a89486ac9c106777a820be7fa03d"
+    },
+    "frontendJsSha256": "03292536788242530a8c92fad349c3531d47e6e9ea928c3e489b641232bffcb9",
+    "manifestFilesMatched": 714,
+    "newDirectoryStartupPassed": true,
+    "modelCalls": 0,
+    "archive": "tongwen-demo-initial-02623.zip"
+  },
+  {
+    "kind": "backup",
+    "strategyVersion": "semantic-agent-0.26.15-candidate",
+    "executionIdentity": {
+      "packId": "scoped-clauses",
+      "strategyFingerprint": "adf4a503cba42e3fe2fd959f0b7fbd8919310534922c9431e6578549be2896de",
+      "promptHash": "dcbbd26ba68a111ccaf1e10dcef88baf17e63ce3b949930c524e3a8114b5de80",
+      "assets": [
+        {
+          "file": "system.md",
+          "hash": "e62c9d5b36fccde2d94677bae1a20e4653547acf017238a2c774cd442fac5b47"
+        },
+        {
+          "file": "local-change.md",
+          "hash": "79f4734402c94a4ae28c4985d015165a4debe0de3cc38fe0adcf9d2a33d99d42"
+        },
+        {
+          "file": "efficient-investigation.md",
+          "hash": "1e839a521c12e827aab3c6aa09d56e69144d7944ab904cf715db7a970cf418e1"
+        },
+        {
+          "file": "scoped-clauses.md",
+          "hash": "e263acdc1af4a542545ec23801abd7336c9c8e8d39ddb315ea8d364b9bb06844"
+        }
+      ],
+      "toolSchemaHash": "a7c667df841ceb96782b265830794df2b0e789031a99c290e13b20ad30280c7b",
+      "codeHash": "86eb031bc1b95c241eac885b67050a770dedc88090768af3e3490c3bb7740ceb"
+    },
+    "frontendJsSha256": "03292536788242530a8c92fad349c3531d47e6e9ea928c3e489b641232bffcb9",
+    "manifestFilesMatched": 714,
+    "newDirectoryStartupPassed": true,
+    "modelCalls": 0,
+    "archive": "tongwen-demo-backup-02615.zip"
+  }
+]

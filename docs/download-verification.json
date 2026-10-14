@@ -4,7 +4,7 @@
   "backupDocuments": 10,
   "backupScopes": 2,
   "backupAgentRuns": 0,
-  "backupVersion": null,
+  "backupVersion": "semantic-agent-0.26.15-candidate",
   "noModelKey": true,
   "newModelCalls": 0
 }

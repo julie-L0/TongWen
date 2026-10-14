@@ -50,8 +50,13 @@
     },
     {
       "file": "docs/download-verification.json",
-      "bytes": 228,
-      "sha256": "b94180eabacb5da55bf41ae2eaa58f38af598b01eef3b5334c18635a57cf18bf"
+      "bytes": 258,
+      "sha256": "74cdabd5ca8cbf33c55d248ea84fd9b57c1ccfb6e92b16df4f965fa4a49f18f1"
+    },
+    {
+      "file": "docs/extracted-package-identities.json",
+      "bytes": 2787,
+      "sha256": "a6771d22566bd16be04e0b9e2137fa1077d2511c21e7efaeb457ed9bef2b229a"
     },
     {
       "file": "docs/historical-02615-normal-proof.json",
