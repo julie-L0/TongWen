@@ -5,6 +5,7 @@ import type { Proposal, Run, ReviewBatch } from './types.ts';
 import { documentReviewCoverage } from './draft-projection.ts';
 import { sourceGoalFingerprint, assertScopedChange } from './source-scope.ts';
 import { reviewReadiness } from './review-readiness.ts';
+import { rememberMergedRelations, invalidateRelation } from './confirmed-relations.ts';
 
 // Human review is a separate command layer. The model never receives a writing tool.
 // Manifest/evidence remain immutable; only receipts of our own approved writes extend freshness.
@@ -113,6 +114,7 @@ export class AgentReview {
         batch.operations.map((o) => ({ memberId: o.memberId, beforeVersionId: o.beforeVersionId })),
       );
       a.saveReviewBatch(batch);
+      rememberMergedRelations(s, run, proposals, batch);
       a.saveRun(run);
       a.event(runId, 'applied', '用户选中提案已保存并回读；未选提案保留。', {
         batchId: batch.id,
@@ -181,6 +183,9 @@ export class AgentReview {
       this.refreshRemaining(run, new Set(expected.map((o) => o.memberId)));
       this.shareReceipts(run, batch!, previousHeads);
       batch!.undoneAt = new Date().toISOString();
+      for (const relation of a.confirmedRelations())
+        if (batch!.operations.some(op => op.memberId === relation.targetMemberId))
+          invalidateRelation(s, relation, '已确认修订被撤销，关系检查点失效');
       if (run.status === 'running') {
         run.status = 'interrupted';
         run.stopReason = '用户撤销了运行中的确认批次；已停止本轮检查，请基于当前资料重新检查。';

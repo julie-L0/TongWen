@@ -1,0 +1,91 @@
+{
+  "kind": "single_pair_numeric_personal_demo_not_general_performance_claim",
+  "executionIdentity": {
+    "packId": "scoped-clauses",
+    "strategyFingerprint": "beec7b95dece0b255e53707c64d9b9f8b9bcd16511b0329bd038b9ae5b01dbf9",
+    "promptHash": "f406d08e1af35192abfa18cad659a3cdee4c71ea8a3ecb7c2ae4f5007644ea3d",
+    "assets": [
+      {
+        "file": "system.md",
+        "hash": "e62c9d5b36fccde2d94677bae1a20e4653547acf017238a2c774cd442fac5b47"
+      },
+      {
+        "file": "local-change.md",
+        "hash": "79f4734402c94a4ae28c4985d015165a4debe0de3cc38fe0adcf9d2a33d99d42"
+      },
+      {
+        "file": "efficient-investigation.md",
+        "hash": "1e839a521c12e827aab3c6aa09d56e69144d7944ab904cf715db7a970cf418e1"
+      },
+      {
+        "file": "scoped-clauses.md",
+        "hash": "73d6c21cf20fe6ca7604382a35494b8a9b34fd4acbbb7aec28f4f8e6aaafa0f6"
+      }
+    ],
+    "toolSchemaHash": "f0ab3922f1ec20bee82637c0d16c429f0924013f4bbee93489a1af46793403c6",
+    "codeHash": "f71e1f7e1b2a2101993396064a72fc9d4c14b74c9176fb39a5b006ecddde4415"
+  },
+  "paths": [
+    {
+      "path": "first",
+      "runId": "93c7423b-db7f-4b5b-8e03-a40f9f2b9559",
+      "modelRequests": 6,
+      "inputTokens": 44482,
+      "outputTokens": 1037,
+      "totalTokens": 45519,
+      "estimatedUsage": false,
+      "totalCheckMs": 15901,
+      "documentReviewComplete": true
+    },
+    {
+      "path": "hot",
+      "runId": "3016bc1c-6b19-4aa4-a819-51a76b9e0cb6",
+      "modelRequests": 1,
+      "inputTokens": 1355,
+      "outputTokens": 547,
+      "totalTokens": 1902,
+      "estimatedUsage": false,
+      "totalCheckMs": 4812,
+      "documentReviewComplete": true
+    },
+    {
+      "path": "cold",
+      "runId": "a4b9a720-4aef-4000-b533-576c98bf5896",
+      "modelRequests": 7,
+      "inputTokens": 52861,
+      "outputTokens": 1176,
+      "totalTokens": 54037,
+      "estimatedUsage": false,
+      "totalCheckMs": 18242,
+      "documentReviewComplete": true
+    }
+  ],
+  "observedSameInputHotColdTimeReductionPercent": 73.6,
+  "observedSameInputHotColdTokenReductionPercent": 96.5,
+  "oneComparisonOnly": true,
+  "newPublisherModelCalls": 0,
+  "checks": {
+    "firstRealDiscoveryAndHumanMerge": true,
+    "hotRealReuseAndAllClauses": true,
+    "sameHotColdCompleteManifest": true,
+    "sameEngineIdentity": true,
+    "frozenCodeUnchanged": true,
+    "same400SourceBaseline": true,
+    "sameCorrect300Candidate": true,
+    "allWholeDocumentReviewsComplete": true,
+    "savedRefreshSource300": true,
+    "savedRefreshTarget300": true,
+    "undoPreservesSource300": true,
+    "undoRestoresTarget400": true,
+    "undoInvalidatesRelation": true,
+    "undoOldProposalNeedsRevalidation": true,
+    "undoUIConfirmationDisabled": true,
+    "exactlyThreeTasks": true,
+    "noUnfinishedOrEstimatedRequests": true,
+    "requestBudget": true,
+    "inputBudget": true,
+    "outputBudget": true
+  },
+  "budgetAlreadyConsumed": true,
+  "fullProductAcceptance": false
+}

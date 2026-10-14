@@ -1,0 +1,17 @@
+{
+  "freshDocuments": 2,
+  "freshScopes": 1,
+  "freshAgentRuns": 0,
+  "freshConfirmedRelations": 0,
+  "initialAmount": 300,
+  "modelKeyConfigured": false,
+  "publisherModelCalls": 0,
+  "npmNormalInstallPassed": true,
+  "tiptapVersionPinned": "3.31.4",
+  "tenOfflineTestsPassed": true,
+  "frontendBuildPassed": true,
+  "backendTypecheckPassed": true,
+  "patchedCoreHash": "f71e1f7e1b2a2101993396064a72fc9d4c14b74c9176fb39a5b006ecddde4415",
+  "sameAsOriginalLiveCore": true,
+  "sourceOnlyNoZip": true
+}

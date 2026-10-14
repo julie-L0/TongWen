@@ -1,9 +1,9 @@
 {
-  "kind": "personal_single_user_github_source_demo",
-  "strategyVersion": "semantic-agent-0.26.32-candidate",
+  "kind": "independent_personal_confirmed_relation_demo",
+  "strategyVersion": "semantic-agent-0.26.33-confirmed-relations-demo",
   "executionIdentity": {
     "packId": "scoped-clauses",
-    "strategyFingerprint": "f925712bf4e1053f929b50feb301980e6b3206d16f73000057ad22b2b3ab7e42",
+    "strategyFingerprint": "beec7b95dece0b255e53707c64d9b9f8b9bcd16511b0329bd038b9ae5b01dbf9",
     "promptHash": "f406d08e1af35192abfa18cad659a3cdee4c71ea8a3ecb7c2ae4f5007644ea3d",
     "assets": [
       {
@@ -24,43 +24,14 @@
       }
     ],
     "toolSchemaHash": "f0ab3922f1ec20bee82637c0d16c429f0924013f4bbee93489a1af46793403c6",
-    "codeHash": "29eb5a9fe5aeb8cd02c4583411da276571d5b869ab4727733afb439d39b741b4"
+    "codeHash": "f71e1f7e1b2a2101993396064a72fc9d4c14b74c9176fb39a5b006ecddde4415"
   },
-  "model": {
-    "model": "deepseek-v4-pro",
-    "thinking": false,
-    "effort": null,
-    "maxTokens": 4096
-  },
-  "budget": {
-    "modelCalls": 40,
-    "toolCalls": 120,
-    "timeMs": 480000,
-    "inputTokens": 500000,
-    "outputTokens": 48000
-  },
-  "acceptancePassed": false,
-  "frontendJsSha256": "28b75d6a06a154659978caa50af49a5f10b9aa523efdca9ab449706cc00429f5",
-  "syntheticDocuments": 6,
+  "frontendJsSha256": "bfbe887780bf72113b0b177926916fe555b99c95ce283bc47e3337a7f322c523",
+  "syntheticDocuments": 2,
   "exampleHistory": false,
-  "privateDailyDatabaseIncluded": false,
   "modelKeyIncluded": false,
-  "createdAt": "2026-10-14T02:57:36.422Z",
-  "normalDemoUiPassed": true,
-  "normalDemoUiChecks": 48,
-  "normalDemoUiRunId": "b4a67e01-25a5-44a1-bbcd-7c2b46766dfc",
-  "recognitionWholeBusinessPassed": false,
-  "repeatStabilityEstablished": false,
-  "packagedAt": "2026-10-14T03:36:31.205743+00:00",
-  "knownLimitations": [
-    "金额正常闭环只有一次真实验证，重复稳定性未验",
-    "历史recognition测试资料存在模型理解坏例，未修复；已移出默认演示，不是待开发账号协作功能",
-    "PDF及澄清续跑未完成本次完整验收"
-  ],
-  "demoProfile": "expense_only",
-  "syntheticGroups": 1,
-  "frontendChange": "Copy clarification only: document roles and protection, personal workspace, generic model API configuration.",
-  "normalEvidenceFrontendJsSha256": "03292536788242530a8c92fad349c3531d47e6e9ea928c3e489b641232bffcb9",
-  "normalEvidenceVersion": "semantic-agent-0.26.32-candidate",
-  "newModelCalls": 0
+  "normalDemoUiPassed": false,
+  "oldNormalEvidenceVersion": "semantic-agent-0.26.32-candidate",
+  "publisherModelCalls": 0,
+  "wholeAcceptancePassed": false
 }

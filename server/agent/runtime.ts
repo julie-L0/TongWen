@@ -12,6 +12,7 @@ import { auditMessages, openRound, refreshRound, effectSnapshot, changedEffects 
 import { coverage, candidateRefs, propagationChanges } from './investigation.ts';
 import { documentReviewCoverage } from './draft-projection.ts';
 import { documentReviewMessages } from './document-review-context.ts';
+import { confirmedCheck } from './confirmed-check.ts';
 
 export class AgentRuntime {
   private service: AgentService;
@@ -128,6 +129,11 @@ export class AgentRuntime {
         throw new AppError('STRATEGY_CHANGED', '运行绑定的 Agent 策略已变化，请创建新任务。', 409);
       if (run.executionIdentity && hash(run.executionIdentity) !== hash(this.service.executionIdentity))
         throw new AppError('STRATEGY_CHANGED', '运行绑定的策略资产或执行协议已变化，请创建新任务。', 409);
+      if (run.relationReuse?.state === 'selected') {
+        const result = await confirmedCheck(this.service,this.model,this.tools,run,
+          AbortSignal.any([controller.signal,AbortSignal.timeout(Math.min(this.requestTimeoutMs,run.budget.timeMs))]),this.auditInputs);
+        if(result === 'finished')return;
+      }
       while (run.status === 'running') {
         this.syncReviewReceipts(run);
         this.closeRound(run, 'completed');

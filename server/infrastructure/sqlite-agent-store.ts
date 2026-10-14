@@ -10,12 +10,15 @@ import type {
   ReviewBatch,
 } from '../agent/types.ts';
 import { sqliteTransaction } from './sqlite-transaction.ts';
+import type { ConfirmedRelation } from '../../shared/contracts/agent.ts';
 
 export class SQLiteAgentStore implements AgentStore {
   private db: DatabaseSync;
   constructor(db: DatabaseSync) {
     this.db = db;
     db.exec(`
+   CREATE TABLE IF NOT EXISTS confirmed_relations(id TEXT PRIMARY KEY,scope_id TEXT NOT NULL,source_member_id TEXT NOT NULL,source_block_id TEXT NOT NULL,target_member_id TEXT NOT NULL,status TEXT NOT NULL,payload_json TEXT NOT NULL);
+   CREATE INDEX IF NOT EXISTS confirmed_relation_source ON confirmed_relations(scope_id,source_member_id,source_block_id,status);
    CREATE TABLE IF NOT EXISTS agent_runs(id TEXT PRIMARY KEY,request_id TEXT NOT NULL UNIQUE,input_hash TEXT NOT NULL,scope_id TEXT NOT NULL REFERENCES scopes(id),source_member_id TEXT NOT NULL REFERENCES memberships(id),status TEXT NOT NULL,manifest_json TEXT NOT NULL,runtime_json TEXT NOT NULL,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
    CREATE INDEX IF NOT EXISTS agent_runs_scope ON agent_runs(scope_id,status);
    CREATE TABLE IF NOT EXISTS agent_changes(run_id TEXT NOT NULL REFERENCES agent_runs(id),id TEXT NOT NULL,payload_json TEXT NOT NULL,PRIMARY KEY(run_id,id));
@@ -33,6 +36,14 @@ export class SQLiteAgentStore implements AgentStore {
   }
   transaction<T>(fn: () => T): T {
     return sqliteTransaction(this.db, fn);
+  }
+  confirmedRelations(): ConfirmedRelation[] {
+    return this.db.prepare('SELECT payload_json FROM confirmed_relations ORDER BY rowid DESC').all()
+      .map(r => JSON.parse(String(r.payload_json)));
+  }
+  saveConfirmedRelation(r: ConfirmedRelation) {
+    this.db.prepare('INSERT INTO confirmed_relations VALUES(?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET status=excluded.status,payload_json=excluded.payload_json')
+      .run(r.id,r.scopeId,r.sourceMemberId,r.sourceBlockId,r.targetMemberId,r.status,JSON.stringify(r));
   }
   saveRoundInput(runId: string, round: number, input: unknown) {
     this.db.prepare('INSERT INTO agent_round_inputs VALUES(?,?,?)').run(runId, round, JSON.stringify(input));

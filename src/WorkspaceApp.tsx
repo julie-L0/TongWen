@@ -67,6 +67,7 @@ export default function WorkspaceApp() {
       if (targets.every((v) => v.member.role === 'anchor'))
         throw new Error('请勾选需要修订或比较的目标资料；底本会自动核对，无需单独发起同步。');
       const result = await agentApi.create({
+        relationMode: 'auto',
         sourceMemberId,
         memberIds: targets.map((v) => v.member.id),
         sourceBlockIds,

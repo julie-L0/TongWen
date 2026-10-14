@@ -14,6 +14,7 @@ import { executionIdentity } from './identity.ts';
 import type { ExecutionIdentity } from '../../shared/contracts/agent.ts';
 import { sourceScope, assertScopedChange } from './source-scope.ts';
 import { reviewReadiness } from './review-readiness.ts';
+import { validateRelation, invalidateRelation } from './confirmed-relations.ts';
 
 export class AgentService {
   readonly store: AgentStore;
@@ -56,6 +57,21 @@ export class AgentService {
     }
     const source = this.workspace.view(input.sourceMemberId);
     assertEditable(source);
+    if (input.relationMode !== undefined && !['auto','full'].includes(input.relationMode))
+      fail('INVALID_RELATION_MODE', '不支持的关系检查模式。');
+    if(input.sourceBlockIds!==undefined && !Array.isArray(input.sourceBlockIds))
+      fail('INVALID_SOURCE_SELECTION','请提供当前文档的来源位置列表。');
+    if(input.memberIds!==undefined && !Array.isArray(input.memberIds))
+      fail('OUT_OF_SCOPE','所选目标必须是资料成员列表。');
+    const remembered = input.relationMode !== 'full' ? this.store.confirmedRelations().filter(r =>
+      r.status === 'valid' && r.scopeId === source.scope.id && r.sourceMemberId === source.member.id &&
+      (!input.sourceBlockIds || input.sourceBlockIds.includes(r.sourceBlockId)) &&
+      (!input.memberIds || input.memberIds.includes(r.targetMemberId))) : [];
+    const cached = remembered.length === 1 ? remembered[0] : undefined;
+    if (cached && !input.baselineVersionId) {
+      const baseline = this.workspaceStore.version(cached.sourceVersionId);
+      if (baseline.documentId === source.document.id) source.baseline = baseline;
+    }
     if (input.baselineVersionId) {
       const baseline = this.workspaceStore.version(input.baselineVersionId);
       if (baseline.documentId !== source.document.id) fail('VERSION_OWNERSHIP', '来源比较基线属于其他文档。');
@@ -96,6 +112,12 @@ export class AgentService {
       .map((v) => (v.member.id === source.member.id ? source : v));
     if (views.some((v) => v.member.role === 'unconfigured'))
       fail('SCOPE_NOT_CONFIGURED', '请先配置范围内所有资料的角色。');
+    let reuse = cached;
+    if (reuse) {
+      const invalid = validateRelation(this, reuse, source, views);
+      if (invalid) { invalidateRelation(this, reuse, invalid); reuse = undefined; }
+      else if (input.baselineVersionId && input.baselineVersionId !== reuse.sourceVersionId) reuse = undefined;
+    }
     const active = this.store
       .runs()
       .find(
@@ -134,6 +156,8 @@ export class AgentService {
           active.strategyVersion === promptVersion &&
           hash(active.executionIdentity) === hash(this.executionIdentity) &&
           active.reviewProtocol === this.reviewProtocol;
+        if ((active.relationReuse?.relation.id || null) !== (reuse?.id || null))
+          fail('ACTIVE_RUN_EXISTS', '当前范围已有不同检查模式的运行，请取消或等待结束。', 409);
         if (!same) fail('ACTIVE_RUN_EXISTS', '当前范围已有不同目标的运行，请取消或等待结束。', 409);
         this.store.transaction(() =>
           this.workspaceStore.saveRequest(input.requestId, 'agent-run', input, { runId: active.id }),
@@ -210,6 +234,8 @@ export class AgentService {
       });
     const createdAt = new Date().toISOString();
     const run: Run = {
+      ...(reuse ? { relationReuse: { mode: 'confirmed-single-paragraph-v1' as const,
+        relation: structuredClone(reuse), state: 'selected' as const } } : {}),
       sourceBlockIds,
       id: uid(),
       strategyVersion: promptVersion,
@@ -319,6 +345,8 @@ export class AgentService {
         documentCount: views.length,
         bodyCandidates: candidateRefs(run).length,
         deltas: deltas.length,
+        path: reuse ? 'confirmed-relation' : 'full-investigation',
+        relationId: reuse?.id,
       });
     });
     return run;
@@ -407,6 +435,9 @@ export class AgentService {
       stopCode: run.stopCode,
       stats: run.stats,
       budget: run.budget,
+      relationReuse: run.relationReuse ? { mode: run.relationReuse.mode, relationId: run.relationReuse.relation.id,
+        state: run.relationReuse.state, reason: run.relationReuse.reason,
+        executorToolCalls:run.relationReuse.executorToolCalls } : undefined,
       reviewBatches: this.store.reviewBatches(id),
       decisions: this.workspaceStore
         .decisions()

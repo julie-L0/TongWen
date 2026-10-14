@@ -1,6 +1,6 @@
 {
   "id": "scoped-clauses",
-  "version": "semantic-agent-0.26.32-candidate",
+  "version": "semantic-agent-0.26.33-confirmed-relations-demo",
   "projection": "lean-source-clauses-v2",
   "observation": "lean-v1",
   "prompts": ["system.md", "local-change.md", "efficient-investigation.md", "scoped-clauses.md"]

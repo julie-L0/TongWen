@@ -47,6 +47,37 @@ export type Relation = {
   evidenceIds: string[];
   reason: string;
 };
+// Cross-run knowledge accepted by the existing human merge, never model permission.
+export type ConfirmedRelation = {
+  id: string;
+  scopeId: string;
+  policyRevision: number;
+  policyHash: string;
+  sourceMemberId: string;
+  sourceDocumentId: string;
+  sourceBlockId: string;
+  sourceVersionId: string;
+  sourceText: string;
+  sourceContextHash: string;
+  targetMemberId: string;
+  targetDocumentId: string;
+  targetBlockId: string;
+  targetVersionId: string;
+  targetTextHash: string;
+  targetContextHash: string;
+  type: Relation['type'];
+  direction: 'source_to_target';
+  coverageMode: Relation['coverageMode'];
+  businessObject: string;
+  reason: string;
+  confirmedRunId: string;
+  confirmedBatchId: string;
+  confirmedRequestId: string;
+  confirmedAt: string;
+  status: 'valid' | 'invalidated' | 'revoked';
+  invalidReason?: string;
+  updatedAt: string;
+};
 export type FindingStatus =
   | 'needs_update'
   | 'already_current'
@@ -158,6 +189,7 @@ export type AgentRound = {
 };
 
 export type CreateRunRequest = {
+  relationMode?: 'auto' | 'full';
   sourceBlockIds?: string[];
   sourceMemberId: string;
   requestId: string;
@@ -186,6 +218,7 @@ export type ProposalSummary = {
   applicable: boolean;
 };
 export type AgentReport = {
+  relationReuse?: { mode: string; relationId: string; state: 'selected' | 'verified' | 'invalidated' | 'fallback'; reason?: string; executorToolCalls?: number };
   conflicts?: { memberId: string; title: string; section: string; original: string; sourceAfter: string; reason: string }[];
   sourceEdits?: { blockId: string; kind: string; before: string; after: string }[];
   sourceBlockIds?: string[];

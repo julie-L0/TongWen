@@ -1,7 +1,7 @@
 import type { RunStatus, Ref, Evidence, SourceQuote, Change, Relation, FindingStatus, Finding, Difference, Budget, Stats, ReviewBatch, RunEvent } from '../../shared/contracts/agent.ts';
 export type { RunStatus, Ref, Evidence, SourceQuote, Change, Relation, FindingStatus, Finding, Difference, Budget, Stats, ReviewBatch, RunEvent } from '../../shared/contracts/agent.ts';
 import type { Block, Delta, Patch, View } from '../domain/types.ts';
-import type { AgentRound, ExecutionIdentity } from '../../shared/contracts/agent.ts';
+import type { AgentRound, ExecutionIdentity, ConfirmedRelation } from '../../shared/contracts/agent.ts';
 
 export type Proposal = {
   id: string;
@@ -48,6 +48,8 @@ export type DocumentReview = {
   createdAt: string;
 };
 export type Run = {
+  relationReuse?: { mode: 'confirmed-single-paragraph-v1'; relation: ConfirmedRelation;
+    state: 'selected' | 'verified' | 'invalidated' | 'fallback'; reason?: string; executorToolCalls?: number };
   sourceBlockIds?: string[];
   id: string;
   strategyVersion?: string;
@@ -92,6 +94,8 @@ export type Run = {
   approvedHeads?: Record<string, { versionId: string; revision: number }>;
 };
 export interface AgentStore {
+  confirmedRelations(): ConfirmedRelation[];
+  saveConfirmedRelation(relation: ConfirmedRelation): void;
   saveRoundInput?(runId: string, round: number, input: unknown): void;
   roundInputs?(runId: string): { round: number; input: unknown }[];
   transaction<T>(fn: () => T): T;
