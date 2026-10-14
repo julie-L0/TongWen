@@ -3083,8 +3083,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 2714,
-      "sha256": "7c721ff949a8b7c2d60befea0386e8b59986fcee40c145846e748fe74b71c71c"
+      "bytes": 2633,
+      "sha256": "868f7ec087e1054cf41bde4a322b5b4e899018e493f607de97ee18ec540546da"
     },
     {
       "file": "scripts/seed-demo.mjs",
@@ -3599,5 +3599,7 @@
   ],
   "secretScanPassed": true,
   "symlinks": 0,
-  "dailyDatabaseIncluded": false
+  "dailyDatabaseIncluded": false,
+  "documentationRevision": 2,
+  "runtimeCodeUnchanged": true
 }

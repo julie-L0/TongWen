@@ -39,6 +39,11 @@
       "sha256": "97ee15df700e104904d76d5bdd7bc879ee266d4f2cbc93e7dc0013f44272efb4"
     },
     {
+      "file": "docs/api-key-docs-revision-proof.json",
+      "bytes": 859,
+      "sha256": "788b0c9af46326d2b63fe2bd34a41f8c5aa3ff7345f4d6687a701712aaf809db"
+    },
+    {
       "file": "docs/clean-package-ui.png",
       "bytes": 72682,
       "sha256": "3c3ee93d536229161d24ce156057ed1b1cba60e9413707faf77ad9918877aa2f"
@@ -100,18 +105,18 @@
     },
     {
       "file": "README.md",
-      "bytes": 5269,
-      "sha256": "81df24eb1a338e66722df0219e92e597c605d25b1ab35b4d1a5ad6e77eabad1e"
+      "bytes": 5155,
+      "sha256": "3a9b3d3516e1d071fea4b8f1bae41cf462270edaa478fbafecee5b29e7702857"
     },
     {
       "file": "releases/tongwen-demo-backup-02615.zip",
-      "bytes": 2027502,
-      "sha256": "e7c1ce723d0827d570d3c361bd2c9bbf1c6afe0bb145626adc3acb4481b20a1e"
+      "bytes": 2038992,
+      "sha256": "cb1bbd506d6624392492881edc284f76029204d5ab552e9d32eea5151c659390"
     },
     {
       "file": "releases/tongwen-demo-initial-02623.zip",
-      "bytes": 2030466,
-      "sha256": "66b6a217af75122742fba22aa261fca3213c0c636b33b7553f2a5cfdec8a34f7"
+      "bytes": 2041960,
+      "sha256": "e4ea10c5a3181dda29e94ddca7425ffebe8817eed97be810a56d5375b2d784a2"
     },
     {
       "file": "scripts/seed-demo.mjs",
@@ -620,8 +625,8 @@
     },
     {
       "file": "ZIP_INITIAL_MANIFEST.json",
-      "bytes": 122712,
-      "sha256": "7bdccc182c0fdd396c729b0bb9efcfe2ffc7d6ff7184203681ab41b5cf7c140f"
+      "bytes": 126379,
+      "sha256": "290ecebdb308ef7ed3338dccd56e15729db337ed3c91c1a50a94ca41f7f84cc1"
     },
     {
       "file": "启动演示.cmd",

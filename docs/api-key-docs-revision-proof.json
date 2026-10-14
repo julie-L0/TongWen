@@ -1,0 +1,28 @@
+[
+  {
+    "downloadPath": "releases/tongwen-demo-initial-02623.zip",
+    "localArchive": "tongwen-demo-initial-02623-docs-v2.zip",
+    "sha256": "e4ea10c5a3181dda29e94ddca7425ffebe8817eed97be810a56d5375b2d784a2",
+    "bytes": 2041960,
+    "documentationRevision": 2,
+    "changedFiles": [
+      "README.md",
+      "SUBMISSION_MANIFEST.json"
+    ],
+    "runtimeCodeUnchanged": true,
+    "zipIntegrityPassed": true
+  },
+  {
+    "downloadPath": "releases/tongwen-demo-backup-02615.zip",
+    "localArchive": "tongwen-demo-backup-02615-docs-v2.zip",
+    "sha256": "cb1bbd506d6624392492881edc284f76029204d5ab552e9d32eea5151c659390",
+    "bytes": 2038992,
+    "documentationRevision": 2,
+    "changedFiles": [
+      "README.md",
+      "SUBMISSION_MANIFEST.json"
+    ],
+    "runtimeCodeUnchanged": true,
+    "zipIntegrityPassed": true
+  }
+]
