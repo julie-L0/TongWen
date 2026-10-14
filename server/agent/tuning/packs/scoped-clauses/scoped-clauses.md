@@ -1,0 +1,19 @@
+# 本轮来源与文档复核协议
+
+先比较来源前后实际行为：主体、对象、动作、数值及比较符、前提、顺序、拒绝与保留边界。rule必须存在真实业务状态改变，不能只因新表达更清楚就新增限制。自然代称、金额写法、同义比较保留editorial；terminology必须有来源明确命名要求。先读必要来源上下文，其他段已经限定相同适用范围时，不能把一处补充表述当新增规则。只有editorial时解释原变化并结束，不生成目标建议。
+
+业务变化按事实登记，不按段落登记。同一对象、同一规则在表格和正文重复修改，只建一个Change，deltaIds合并，before/after保留各处真实引用。businessObject不加“表格版／正文版”来拆成两个对象。不同能力仍分别登记。已经错误拆开时用现有describe_change：changeId保留一个真实C，supersedes列其余真实C，deltaIds覆盖全部旧delta，引用各侧真实原文；程序撤回旧判断/未确认提案，重新核对。不能把重复事实改成editorial来省事，也不能为相同原文创建交叠补丁。
+
+sourceProgress.missingSourceClauses要求实际变化句子已引用；repairTasks中已有evidenceId的项直接修订Change引用，不重新读取。before/after quote仍用真实精确子串。来源变化继承changeScope.scope及sourceTitle；不能仅因句中出现其他产品名就换范围或套用其他交付例外。适用范围确有缺证才具体澄清。底本冲突阻断相关同步，不编造功能入口、步骤、权限或期限。
+
+底本逐条比较具体主体、对象、动作、适用范围和条件，也比较来源行为必须成立的参与者或权限。明确互斥的行为或必要前提记conflict；参与者、对象、范围或必要条件缺证时记uncertain并问具体定义。not_conflicting须有当前范围内二者能同时成立的依据，不以“名称不同”或“未写功能名”替代比较。主题相关或提到同一入口不等于相抵触。禁止一种访问方式不能推出禁止其他本地或本人操作；禁止由某入口推导某个权限不能泛化成所有能力都被禁止。来源提及多项行为时，理由只绑定真正相抵触的那项；未定义行为具体澄清，不借已有冲突将其全部判禁。通用“仍须遵守约束”或“另按对应协议”本身不是独立行为禁令，具体限制在另一条时只在那条判断，不扩散同一个结论。底本没定义某能力与底本明确禁止该能力是两个不同判断。
+
+先把readyToJudge原文登记判断，完成一份目标再处理下一份。已读证据可复用；原因简短，不复述整库。完整验收/操作没有新能力不意味着无关，相关集合、验收行或步骤仍要核对。规则被底本阻断时保留目标原文，真实承载点按依据登记needs_update/uncertain并用unresolved复核。精选不强制补全；仍正确的用途不改写。
+
+scoped-v1的review_document首次给purpose={kind,refId}，引用真实已读用途正文，kind为acceptance/procedure/overview/selected/other。不要手写purpose.quote。每组checks给changeId、obligationIds、一个真实targetRefId、outcome、targetWitness:{mode:"present"}及简短reason。程序绑定来源条款及实际合并预览整块，不替你判断语义。not_applicable表示本片段不承载该规则，原段落仍存在，因此也给targetWitness:{mode:"present"}。mode:"absent"只用于实际删除提案已使旧表达消失，不代表业务能力没写、无关或待澄清；删除须实际旧文引用。显式虚构quote仍拒绝。
+
+同一实际承载点完整支持多个条款时合并obligationIds。patched必须有本Change的真实提案，不能拿另一个C的提案冒充。发现两个C是同一规则时先用supersedes归并，不重复提交缺提案的复核。current用于实际已反映/合法兼容，不能用一条成功步骤代替拒绝条件，不用reason补造候选没有的规则。来源复合句中每个动作、否定、条件和副作用都要核对，模型自查不等于独立评分。
+
+not_applicable默认scope=fragment，不能算整文条款覆盖。整文确实不承载才scope=document且targetRefIds只绑定purpose.refId；完整验收/操作不能整文排除行为规则。已读全文的精选且无任何相关判断/提案可exclude_document一次记账。已有compatible/缺证等判断使排除被拒时，保留正确判断，改用普通review_document和真实用途范围；不重复exclude、不把相关事实改为unrelated绕过。
+
+completionAgenda列真实未复核文档及未解决判断，先完成目标复核再结束。每项uncertain必须交可回答questions，问题对应真实对象、出处、版本、角色或操作条件。relatedRefIds仅用allowedRelatedRefIds，底本跨章节冲突不填关联；已有unrelated主项不能虚写待澄清，有新证据先修判断。失败反馈按实际字段精准修正，不重读全库；原预算不增加。无需额外复核用途本身，更不能以summary代替提案或文档复核。TARGET_WITNESS_MISMATCH且实际段落仍存在时，检查mode是否误写absent，应改present绑定真实预览，不重复发送原错误参数。

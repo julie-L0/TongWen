@@ -1,0 +1,35 @@
+import type { Block, Document, Version, Membership, Scope, Operation, Decision } from '../domain/types.ts';
+import type { Folder, Presentation } from '../domain/types.ts';
+export interface WorkspaceStore {
+  transaction<T>(fn: () => T): T;
+  meta(key: string): string | null;
+  setMeta(key: string, value: string): void;
+  scopes(): Scope[];
+  scope(id: string): Scope;
+  ensureScope(name: string): Scope;
+  bumpScope(id: string): void;
+  documents(): Document[];
+  document(id: string): Document;
+  insertDocument(title: string, format: 'md' | 'pdf', assetPath?: string | null): string;
+  version(id: string): Version;
+  versions(documentId: string): Version[];
+  insertVersion(documentId: string, blocks: Block[], reason: string): Version;
+  setHead(documentId: string, versionId: string): void;
+  members(): Membership[];
+  member(id: string): Membership;
+  insertMember(value: Omit<Membership, 'id'>): Membership;
+  updateMember(value: Membership): void;
+  addOperation(value: Operation): void;
+  operations(): Operation[];
+  markUndone(id: string): void;
+  priorRequest(id: string, command: string, input: unknown): any;
+  saveRequest(id: string, command: string, input: unknown, result: unknown): void;
+  decisions(): Decision[];
+  addDecision(value: Decision): void;
+  revokeDecision(id: string): void;
+  folders(): Folder[];
+  saveFolder(value: Folder): void;
+  presentations(): Presentation[];
+  savePresentation(value: Presentation): void;
+  labelVersion(versionId: string, sourceName: string, label: string): void;
+}

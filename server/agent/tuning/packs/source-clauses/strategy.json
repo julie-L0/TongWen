@@ -1,0 +1,12 @@
+{
+  "id": "source-clauses",
+  "version": "semantic-agent-0.25.3-candidate",
+  "projection": "lean-source-clauses-v1",
+  "observation": "lean-v1",
+  "prompts": [
+    "system.md",
+    "local-change.md",
+    "efficient-investigation.md",
+    "source-clauses.md"
+  ]
+}

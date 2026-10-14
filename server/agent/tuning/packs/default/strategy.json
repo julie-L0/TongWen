@@ -1,0 +1,7 @@
+{
+  "id": "default",
+  "version": "semantic-agent-0.24",
+  "projection": "lean-documents-v1",
+  "observation": "lean-v1",
+  "prompts": ["system.md", "local-change.md", "efficient-investigation.md"]
+}
