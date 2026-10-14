@@ -8,7 +8,7 @@
 
 安装Node.js 24，克隆本仓库并切到本分支，在目录执行 `npm install --ignore-scripts`，再执行 `npm start`。打开 http://127.0.0.1:3084/ 。新库只初始化“费用规则”和“操作指南”两篇单段合成资料，初始300元，零任务、零关系缓存。
 
-需要真实检查时，按 `.env.example` 在本目录配置自己的模型 API key。没有key可以编辑和查看版本；不会发出模型请求。每个分支/目录使用自己的runtime，不替换日常工作区。
+需要使用模型检查时，将 `.env.example` 复制为 `.env`，自行配置模型 API key。没有key可以编辑和查看版本；不会发出模型请求。每个分支/目录使用自己的runtime，不替换日常工作区。
 
 [全新源码启动核对](docs/fresh-source-start-proof.json)。
 

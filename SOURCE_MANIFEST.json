@@ -117,8 +117,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 3230,
-      "sha256": "4802268ff51a4eca3f8df6283e80f67dfda0b69d2b7b5cddd86531e5879db0a9"
+      "bytes": 3240,
+      "sha256": "f87fd39eaebcbca6bf8ef860a7ccde0392082ad5c3b8b1d382bbf6c595d9d360"
     },
     {
       "file": "scripts/start-personal-demo.mjs",
