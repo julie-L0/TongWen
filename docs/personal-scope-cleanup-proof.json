@@ -1,0 +1,28 @@
+{
+  "productScope": "personal_single_user_document_workbench",
+  "defaultSeedGroups": 1,
+  "defaultSeedDocuments": 6,
+  "removedFromDefault": [
+    "recognition synthetic fixture group"
+  ],
+  "removedHistoricalTests": false,
+  "modelErrorFixed": false,
+  "serverSharedChanged": false,
+  "accountSystemAdded": false,
+  "documentRolesRetained": [
+    "sync",
+    "anchor",
+    "history"
+  ],
+  "frontendJsSha256": "28b75d6a06a154659978caa50af49a5f10b9aa523efdca9ab449706cc00429f5",
+  "normalEvidenceVersion": "semantic-agent-0.26.32-candidate",
+  "newModelCalls": 0,
+  "freshStartupPassed": true,
+  "editPersistedAfterReload": true,
+  "testEditRestored": true,
+  "allSixFullBlocksRestored": true,
+  "allSixBaselinesPreserved": true,
+  "oldRuns": 0,
+  "npmRuntimeInstallPassed": true,
+  "frontendTypecheckPassed": true
+}

@@ -1,5 +1,5 @@
 {
-  "kind": "submission_trial_with_verified_limited_normal_demo",
+  "kind": "personal_single_user_github_source_demo",
   "strategyVersion": "semantic-agent-0.26.32-candidate",
   "executionIdentity": {
     "packId": "scoped-clauses",
@@ -40,8 +40,8 @@
     "outputTokens": 48000
   },
   "acceptancePassed": false,
-  "frontendJsSha256": "03292536788242530a8c92fad349c3531d47e6e9ea928c3e489b641232bffcb9",
-  "syntheticDocuments": 10,
+  "frontendJsSha256": "28b75d6a06a154659978caa50af49a5f10b9aa523efdca9ab449706cc00429f5",
+  "syntheticDocuments": 6,
   "exampleHistory": false,
   "privateDailyDatabaseIncluded": false,
   "modelKeyIncluded": false,
@@ -53,8 +53,14 @@
   "repeatStabilityEstablished": false,
   "packagedAt": "2026-10-14T03:36:31.205743+00:00",
   "knownLimitations": [
-    "共同编辑必要参与者解释存在矛盾，访问限制R5漏判",
-    "仅一次金额正常闭环通过，重复稳定性未验",
-    "PDF及澄清续跑没有本次完整验收"
-  ]
+    "金额正常闭环只有一次真实验证，重复稳定性未验",
+    "历史recognition测试资料存在模型理解坏例，未修复；已移出默认演示，不是待开发账号协作功能",
+    "PDF及澄清续跑未完成本次完整验收"
+  ],
+  "demoProfile": "expense_only",
+  "syntheticGroups": 1,
+  "frontendChange": "Copy clarification only: document roles and protection, personal workspace, generic model API configuration.",
+  "normalEvidenceFrontendJsSha256": "03292536788242530a8c92fad349c3531d47e6e9ea928c3e489b641232bffcb9",
+  "normalEvidenceVersion": "semantic-agent-0.26.32-candidate",
+  "newModelCalls": 0
 }

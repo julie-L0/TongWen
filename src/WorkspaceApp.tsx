@@ -427,7 +427,7 @@ export default function WorkspaceApp() {
           snapshot={snapshot}
           target={organize}
           onClose={() => setModal(null)}
-          onSaved={(s) => done(s, '名称与文件夹已保存；同步组和权限未改变。')}
+          onSaved={(s) => done(s, '名称与文件夹已保存；资料组和文档保护规则未改变。')}
         />
       )}
       {modal === 'selection' && (
@@ -438,7 +438,7 @@ export default function WorkspaceApp() {
           onClose={() => setModal(null)}
           onSaved={(s) => {
             w.synchronize(s);
-            setNotice('已保存选中配置；发生角色或范围变化的旧运行需重新核对。');
+            setNotice('已保存选中配置；发生文档角色或资料组变化的旧运行需重新核对。');
           }}
           onCheck={() => check()}
         />
@@ -479,7 +479,7 @@ export default function WorkspaceApp() {
           <div className="foundation-capabilities">
             <b>现在可用</b>
             <p>
-              Markdown 导入、三类角色、不可变版本、段落／列表增删、历史比较、工作版恢复与撤销、本地持久化。
+              在本机整理自己的文档：Markdown 导入、三类文档角色、不可变版本、段落／列表增删、历史比较、工作版恢复与撤销、本地持久化。
             </p>
             <b>Agent 当前进度</b>
             <p>
@@ -490,12 +490,11 @@ export default function WorkspaceApp() {
             <b>你的文档准备好后</b>
             <p>
               直接导入业务
-              Markdown，设置角色和资料组。旧版与新版可追加到同一逻辑文档；预期答案只用于独立测试，不导入业务范围。
+              Markdown，设置文档角色和资料组。旧版与新版可追加到同一逻辑文档；底本和历史快照按文档用途保持只读。
             </p>
-            <b>DeepSeek 配置</b>
+            <b>模型 API 配置</b>
             <p>
-              使用本地 .env 中的 DeepSeek
-              配置，检查仅读取显式选中资料及必需底本。密钥保留在后端，不发送到浏览器。
+              在本机 .env 中配置自己的模型 API key。检查仅读取显式选中资料及必需底本；密钥保留在后端，不发送到浏览器。
             </p>
           </div>
         </FloatingDialog>

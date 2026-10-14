@@ -102,9 +102,9 @@ export default function SelectionDialog({
         </div>
         <div className="batch-fields">
           <label className="field-label">
-            批量角色
-            <select aria-label="批量角色" value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="keep">保留每份已有角色</option>
+            批量文档角色
+            <select aria-label="批量文档角色" value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="keep">保留每份文档角色</option>
               {Object.entries(roleLabel).map(([id, label]) => (
                 <option key={id} value={id}>
                   {label}
@@ -138,7 +138,7 @@ export default function SelectionDialog({
           </p>
         )}
         <p className="scope-explanation">
-          检查使用已配置的 DeepSeek，读取本轮选中资料和必须核对的底本；只生成提案，不自动修改文档。
+          检查使用你配置的模型 API，读取本轮选中资料和必须核对的底本；只生成提案，确认后才保存到文档。
         </p>
       </FloatingDialog>
       {detail && (

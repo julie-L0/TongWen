@@ -50,7 +50,7 @@ export default function OrganizationDialog({
       onClose={() => !busy && onClose()}
       footer={
         <>
-          <span>整理文件不会改变同步组或权限</span>
+          <span>整理文件只改变名称与位置，资料组和文档保护规则保持不变</span>
           <button className="primary-button" disabled={busy || !name.trim()} onClick={save}>
             保存
           </button>

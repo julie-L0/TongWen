@@ -57,7 +57,7 @@ export default function PropertiesDialog({
       onClose={() => !busy && onClose()}
       footer={
         <>
-          <span>角色与固定版本由你明确设置</span>
+          <span>文档角色与固定版本由你明确设置</span>
           <button
             className="primary-button"
             disabled={busy || !versions.length || !scope.trim()}
