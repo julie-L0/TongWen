@@ -1,0 +1,20 @@
+{
+  "uiTypecheckPassed": true,
+  "uiBuildPassed": true,
+  "backendIdentityUnchanged": true,
+  "behaviors": [
+    "Close button dismisses the window and dock",
+    "Minimize preserves the dock",
+    "All handled suggestions close automatically",
+    "Pending suggestions and saved batches remain in history",
+    "Processed history shows its completed state"
+  ],
+  "validation": "Isolated browser interaction; budget-stop close also verified on local workbench.",
+  "newModelCalls": 0,
+  "newSemanticValidation": false,
+  "localRehearsalIncluded": false,
+  "privateDatabaseIncluded": false,
+  "modelKeyIncluded": false,
+  "frontendJs": "/assets/index-BVeomP5c.js",
+  "frontendJsSha256": "69232a7a2689ef0a3a1cb4a760db993898e8674307d8992866bf5f5b6c8a93a5"
+}

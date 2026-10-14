@@ -20,6 +20,8 @@ export function runProgress(report: AgentReport | null) {
   const states = {
     awaiting_review: hasInvalidated && !readyCount
       ? { title: '旧建议需要重新检查', detail: savedDetail + '旧建议不能直接确认。收起检查并选择目标资料后，按当前版本重新检查。', tone: 'warning' }
+      : savedDocuments > 0 && !report.proposals.some((p) => ['pending', 'deferred', 'needs_revalidation'].includes(p.state))
+        ? { title: '修订已处理', detail: savedDetail + '可以查看修改依据，或按修订批次撤销。', tone: 'success' }
       : { title: count ? `${count} 条修订建议` : '检查完成，无需修订', detail: count ? '勾选需要修改的条目，再确认保存' : '本次检查未发现需要同步修改的内容', tone: 'success' },
     needs_input: { title: investigationComplete ? '检查完成 · 有冲突或待澄清' : '有事项需要确认', detail: '查看下方冲突或待澄清事项；核对来源与依据后再确认建议', tone: 'warning' },
     no_changes: report.stats.modelCalls > 0

@@ -26,12 +26,16 @@
     "toolSchemaHash": "f0ab3922f1ec20bee82637c0d16c429f0924013f4bbee93489a1af46793403c6",
     "codeHash": "f71e1f7e1b2a2101993396064a72fc9d4c14b74c9176fb39a5b006ecddde4415"
   },
-  "frontendJsSha256": "bfbe887780bf72113b0b177926916fe555b99c95ce283bc47e3337a7f322c523",
+  "frontendJsSha256": "69232a7a2689ef0a3a1cb4a760db993898e8674307d8992866bf5f5b6c8a93a5",
   "syntheticDocuments": 2,
   "exampleHistory": false,
   "modelKeyIncluded": false,
   "normalDemoUiPassed": false,
   "oldNormalEvidenceVersion": "semantic-agent-0.26.32-candidate",
   "publisherModelCalls": 0,
-  "wholeAcceptancePassed": false
+  "wholeAcceptancePassed": false,
+  "frontendChange": "Review completion, close versus minimize, and processed history state.",
+  "reviewWindowUiValidated": true,
+  "localRehearsalIncluded": false,
+  "newModelCalls": 0
 }
