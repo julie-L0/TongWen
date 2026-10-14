@@ -1,0 +1,44 @@
+{
+  "version": "semantic-agent-0.26.32-candidate",
+  "executionIdentity": {
+    "packId": "scoped-clauses",
+    "strategyFingerprint": "f925712bf4e1053f929b50feb301980e6b3206d16f73000057ad22b2b3ab7e42",
+    "promptHash": "f406d08e1af35192abfa18cad659a3cdee4c71ea8a3ecb7c2ae4f5007644ea3d",
+    "assets": [
+      {
+        "file": "system.md",
+        "hash": "e62c9d5b36fccde2d94677bae1a20e4653547acf017238a2c774cd442fac5b47"
+      },
+      {
+        "file": "local-change.md",
+        "hash": "79f4734402c94a4ae28c4985d015165a4debe0de3cc38fe0adcf9d2a33d99d42"
+      },
+      {
+        "file": "efficient-investigation.md",
+        "hash": "1e839a521c12e827aab3c6aa09d56e69144d7944ab904cf715db7a970cf418e1"
+      },
+      {
+        "file": "scoped-clauses.md",
+        "hash": "73d6c21cf20fe6ca7604382a35494b8a9b34fd4acbbb7aec28f4f8e6aaafa0f6"
+      }
+    ],
+    "toolSchemaHash": "f0ab3922f1ec20bee82637c0d16c429f0924013f4bbee93489a1af46793403c6",
+    "codeHash": "29eb5a9fe5aeb8cd02c4583411da276571d5b869ab4727733afb439d39b741b4"
+  },
+  "runId": "8cf42bb1-9903-4350-ad74-cc82e5b26d2c",
+  "executionCompleted": true,
+  "wholeBusinessPass": false,
+  "stats": {
+    "modelCalls": 22,
+    "toolCalls": 22,
+    "inputTokens": 181288,
+    "outputTokens": 5951,
+    "estimatedUsage": false,
+    "startedAt": 1791946612220
+  },
+  "confirmedTokens": 187239,
+  "elapsedMs": 89775,
+  "failure": "同一共同编辑能力的必要参与者在不同约束中解释不一致，访问限制R5漏判；R6协作成员冲突已阻断，0提案。",
+  "fourDocumentRefreshProtectionChecks": 9,
+  "repeatStabilityEstablished": false
+}

@@ -1,9 +1,9 @@
 {
-  "kind": "submission_trial_not_claimed_acceptance",
-  "strategyVersion": "semantic-agent-0.26.23-candidate",
+  "kind": "submission_trial_with_verified_limited_normal_demo",
+  "strategyVersion": "semantic-agent-0.26.32-candidate",
   "executionIdentity": {
     "packId": "scoped-clauses",
-    "strategyFingerprint": "7a1299acbc335d1f3242a3d86c874a70446c2263da056f21c30aaae846abf6da",
+    "strategyFingerprint": "f925712bf4e1053f929b50feb301980e6b3206d16f73000057ad22b2b3ab7e42",
     "promptHash": "f406d08e1af35192abfa18cad659a3cdee4c71ea8a3ecb7c2ae4f5007644ea3d",
     "assets": [
       {
@@ -23,8 +23,8 @@
         "hash": "73d6c21cf20fe6ca7604382a35494b8a9b34fd4acbbb7aec28f4f8e6aaafa0f6"
       }
     ],
-    "toolSchemaHash": "a7c667df841ceb96782b265830794df2b0e789031a99c290e13b20ad30280c7b",
-    "codeHash": "05975dc0a88f616566753c9bbbbb5fc04ad9a89486ac9c106777a820be7fa03d"
+    "toolSchemaHash": "f0ab3922f1ec20bee82637c0d16c429f0924013f4bbee93489a1af46793403c6",
+    "codeHash": "29eb5a9fe5aeb8cd02c4583411da276571d5b869ab4727733afb439d39b741b4"
   },
   "model": {
     "model": "deepseek-v4-pro",
@@ -45,5 +45,16 @@
   "exampleHistory": false,
   "privateDailyDatabaseIncluded": false,
   "modelKeyIncluded": false,
-  "createdAt": "2026-10-14T01:50:41.687Z"
+  "createdAt": "2026-10-14T02:57:36.422Z",
+  "normalDemoUiPassed": true,
+  "normalDemoUiChecks": 48,
+  "normalDemoUiRunId": "b4a67e01-25a5-44a1-bbcd-7c2b46766dfc",
+  "recognitionWholeBusinessPassed": false,
+  "repeatStabilityEstablished": false,
+  "packagedAt": "2026-10-14T03:36:31.205743+00:00",
+  "knownLimitations": [
+    "共同编辑必要参与者解释存在矛盾，访问限制R5漏判",
+    "仅一次金额正常闭环通过，重复稳定性未验",
+    "PDF及澄清续跑没有本次完整验收"
+  ]
 }

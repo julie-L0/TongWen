@@ -107,6 +107,8 @@ export function anchorGate(run: Run, changeId: string) {
   const missing = anchors.filter(
     (r) => !run.findings.some((f) => f.changeId === changeId && f.refId === r.id),
   );
+  for (const r of anchors)
+    if (run.constraintReview?.pending.includes(`${changeId}:${r.id}`) && !missing.some(x => x.id === r.id)) missing.push(r);
   const blocking = run.findings.filter(
     (f) =>
       f.changeId === changeId &&

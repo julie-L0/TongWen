@@ -59,6 +59,7 @@ export type Run = {
   documentReviews?: DocumentReview[];
   documentReviewDrafts?: DocumentReview[];
   recoveryHints?: { tool: string; code: string; message: string; details?: unknown; changeId?: string; refId?: string }[];
+  constraintReview?: { changeFingerprint: string; stage: 'initial' | 'reason_review'; pending: string[]; completedAt?: string };
   requestId: string;
   inputHash: string;
   status: RunStatus;

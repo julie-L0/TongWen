@@ -34,6 +34,7 @@ export class AgentReview {
       )
         fail('INVALID_SELECTION', '请选择 1–50 个不同提案。');
       const run = a.run(runId);
+      s.assertCurrentPolicy(run);
       s.assertFresh(run);
       const proposals = input.proposalIds.map((id) => a.proposal(id));
       const readiness = reviewReadiness(run, a.proposals(runId), [...new Set(proposals.map((p) => p.targetMemberId))], coverage(run, a).complete);

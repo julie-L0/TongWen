@@ -2,6 +2,42 @@ import { fail, hash } from '../domain/rules.ts';
 import type { Change, Run, SourceDelta, SourceQuote } from './types.ts';
 
 type Span = { start: number; end: number };
+export function sourceScopeContextRefs(run: Run) {
+  return run.manifest.refs.filter(r => r.memberId === run.manifest.sourceMemberId &&
+    !r.baseline && r.kind !== 'heading' && !run.deltas.some(d => d.afterRefId === r.id))
+    .sort((a, b) => a.order - b.order).slice(0, 2);
+}
+
+export function unreadSourceScopeContext(run: Run) {
+  return sourceScopeContextRefs(run).filter(r => !run.readRefIds.includes(r.id) ||
+    !run.evidence.some(e => e.refId === r.id));
+}
+
+export function bindAnchorScope(run: Run, input: {
+  status: string; scopeBasis?: 'current_source' | 'source_exception' | 'needs_definition';
+  scopeWitness?: SourceQuote;
+}) {
+  const unread = unreadSourceScopeContext(run);
+  if (unread.length) fail('SOURCE_SCOPE_NOT_READ', '底本判断前须读取当前来源的用途／范围正文，不能仅凭变化句中的名词切换范围。', 400,
+    { sourceRefIds: unread.map(r => r.id), committed: false });
+  const basis = input.scopeBasis || 'current_source';
+  if (basis === 'needs_definition' && input.status !== 'uncertain')
+    fail('SOURCE_SCOPE_UNCERTAIN', '适用范围缺证时必须登记uncertain并提出具体澄清，不能先断言相容或禁止。');
+  if (basis === 'source_exception') {
+    const witness = input.scopeWitness;
+    const e = witness && run.evidence.find(e => e.id === witness.evidenceId);
+    const r = e && run.manifest.refs.find(r => r.id === e.refId);
+    if (!witness?.quote.trim() || !e || !r || r.memberId !== run.manifest.sourceMemberId || r.baseline ||
+      !run.readRefIds.includes(r.id) || !e.quote.includes(witness.quote))
+      fail('SOURCE_EXCEPTION_NOT_WITNESSED', '另一范围的例外必须由当前来源自己的真实正文证明适用；底本、目标、历史或关键词不能代替来源证据。', 400,
+        { allowedSourceRefIds: run.manifest.refs.filter(r => r.memberId === run.manifest.sourceMemberId && !r.baseline).map(r => r.id), committed: false });
+  }
+  return { basis, scopeId: run.manifest.source.scope.id, scopeName: run.manifest.source.scope.name,
+    sourceMemberId: run.manifest.sourceMemberId, sourceVersionId: run.manifest.source.version.id,
+    sourceTitle: run.manifest.source.document.title,
+    contextEvidenceIds: sourceScopeContextRefs(run).map(r => run.evidence.find(e => e.refId === r.id)!.id),
+    ...(input.scopeWitness ? { witness: input.scopeWitness } : {}) };
+}
 // Text witnesses constrain the investigation; they do not decide business meaning.
 // Offsets use JS/UTF-16, while alignment uses complete Unicode code points.
 export function textChangeSpans(before: string, after: string) {

@@ -338,6 +338,14 @@ export class AgentService {
         fail('INPUT_STALE', '来源或目标版本变化，旧证据和提案不可继续使用。', 409);
     }
   }
+  isCurrentPolicy(run: Run) {
+    return run.strategyVersion === this.strategy.version && !!run.executionIdentity &&
+      hash(run.executionIdentity) === hash(this.executionIdentity);
+  }
+  assertCurrentPolicy(run: Run) {
+    if (!this.isCurrentPolicy(run))
+      fail('AGENT_POLICY_CHANGED', '检查策略或内核已更新，旧建议需按当前版本重新检查后再确认。原记录保持。', 409);
+  }
   report(id: string): AgentReport {
     const run = this.store.run(id),
       state = coverage(run, this.store),
@@ -353,7 +361,8 @@ export class AgentService {
         (d) =>
           proposals.some((p) => p.differenceId === d.id) || run.findings.some((f) => f.differenceId === d.id),
       );
-    let inputValid = true;
+    const configurationValid = this.isCurrentPolicy(run);
+    let inputValid = configurationValid;
     try {
       this.assertFresh(run);
     } catch {
@@ -374,6 +383,7 @@ export class AgentService {
       documentReview: documentReviewCoverage(run, proposals),
       status: run.status,
       inputValid,
+      configurationValid,
       documents: run.manifest.views.map((v) => ({
         memberId: v.member.id,
         title: v.document.title,
@@ -523,6 +533,7 @@ export class AgentService {
     if (!p) fail('PROPOSAL_REQUIRED', '只有已调查的修订差异可记录审阅决定。');
     if (!['pending', 'deferred', 'retained'].includes(p!.state))
       fail('PROPOSAL_NOT_APPLICABLE', '已应用或需要重新核对的提案不能记录为保留；请检查当前版本。', 409);
+    this.assertCurrentPolicy(this.store.run(p!.latestRunId));
     this.assertFresh(this.store.run(p!.latestRunId));
     for (const k of ['sourceHash', 'targetHash', 'policyHash'] as const)
       if (input[k] && input[k] !== d![k]) fail('INPUT_STALE', '差异指纹已变化。', 409);

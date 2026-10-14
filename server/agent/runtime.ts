@@ -1,6 +1,6 @@
 import { AppError, hash } from '../domain/rules.ts';
 import { AgentTools } from './tools.ts';
-import { modelToolSchemas, readyJudgmentRecovery, readySourceRecovery } from './model-tools.ts';
+import { modelToolSchemas, readyJudgmentRecovery, readySourceRecovery, readyDocumentReviewRecovery, independentAnchorPhase, constraintReviewPhase } from './model-tools.ts';
 import { investigationProgress } from './progress.ts';
 import { retryableModelError } from './model-retry.ts';
 import { setTimeout as pause } from 'node:timers/promises';
@@ -9,8 +9,9 @@ import type { ModelClient, Run } from './types.ts';
 import { ModelResponseError } from './model-errors.ts';
 import { rememberRecovery } from './recovery.ts';
 import { auditMessages, openRound, refreshRound, effectSnapshot, changedEffects } from './rounds.ts';
-import { coverage } from './investigation.ts';
+import { coverage, candidateRefs, propagationChanges } from './investigation.ts';
 import { documentReviewCoverage } from './draft-projection.ts';
+import { documentReviewMessages } from './document-review-context.ts';
 
 export class AgentRuntime {
   private service: AgentService;
@@ -135,6 +136,7 @@ export class AgentRuntime {
         this.syncReviewReceipts(run);
         this.service.assertFresh(run);
         if (run.reviewProtocol === 'documents-v1' && run.changes.length &&
+          !(run.documentCoverageProtocol === 'scoped-v1' && run.findings.some(f => f.status === 'uncertain')) &&
           coverage(run, this.service.store).complete &&
           documentReviewCoverage(run, this.service.store.proposals(run.id)).complete) {
           const state = coverage(run, this.service.store);
@@ -154,11 +156,27 @@ export class AgentRuntime {
           this.stopBudget(run);
           return;
         }
-        const messages = this.service.strategy.buildMessages(structuredClone(run), {
+        if (run.documentCoverageProtocol === 'scoped-v1') {
+          const changeFingerprint = hash(run.changes.map(c => ({ id: c.id, fingerprint: c.fingerprint, kind: c.kind })));
+          if (run.constraintReview?.changeFingerprint !== changeFingerprint) run.constraintReview = undefined;
+          if (!run.constraintReview && propagationChanges(run).length) {
+            const pending = candidateRefs(run).filter(r => r.role === 'anchor').flatMap(r =>
+              propagationChanges(run).map(c => `${c.id}:${r.id}`));
+            run.constraintReview = { changeFingerprint, stage: 'initial', pending };
+          }
+          if (run.constraintReview?.stage === 'initial' && !independentAnchorPhase(run) &&
+            run.constraintReview.pending.every(key => run.findings.some(f => `${f.changeId}:${f.refId}` === key))) {
+            run.constraintReview.stage = 'reason_review';
+          }
+        }
+        let messages = this.service.strategy.buildMessages(structuredClone(run), {
           proposals: structuredClone(this.service.store.proposals(run.id)),
         });
-        const judgmentRecovery = idleRounds >= 2 ? readyJudgmentRecovery(run).slice(0, 6) : [];
+        const judgmentRecovery = idleRounds >= 2 && !constraintReviewPhase(run) ? readyJudgmentRecovery(run).slice(0, 6) : [];
         const sourceRecovery = idleRounds >= 2 ? readySourceRecovery(run) : [];
+        const documentRecovery = !judgmentRecovery.length && !sourceRecovery.length
+          ? readyDocumentReviewRecovery(run, this.service.store.proposals(run.id)) : undefined;
+        if (documentRecovery) messages = documentReviewMessages(run, this.service.store.proposals(run.id), documentRecovery);
         if (sourceRecovery.length) messages.push({ role: 'user', content: JSON.stringify({
           kind: 'source_change_recovery',
           instruction: '本次改前改后已真实读取，尚未登记变化。先用describe_change比较这些实际原文，模型自行判断实际业务变化或editorial，给精确真实引用；同一事实的多处修改可合并deltaIds。不要继续重复列目录。登记后恢复正常读取/判断工具；程序不代填变化类型或传播结论。',
@@ -170,6 +188,7 @@ export class AgentRuntime {
           items: judgmentRecovery,
         }) });
         const toolSchemas = modelToolSchemas(run, { recoverJudgments: judgmentRecovery.length > 0, recoverSource: sourceRecovery.length > 0,
+          recoverDocumentMemberId: documentRecovery?.memberId,
           documentReviewsComplete: documentReviewCoverage(run, this.service.store.proposals(run.id)).complete });
         const projected = Math.ceil(JSON.stringify({ messages, tools: toolSchemas }).length / 2);
         if (run.stats.inputTokens + projected > run.budget.inputTokens) {

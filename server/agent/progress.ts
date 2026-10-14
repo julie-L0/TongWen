@@ -14,6 +14,8 @@ export function investigationProgress(run: Run, proposals: Proposal[]) {
   };
   return hash({
     reads: sorted(run.readRefIds),
+    constraintReview: run.constraintReview && { changeFingerprint: run.constraintReview.changeFingerprint, stage: run.constraintReview.stage,
+      pending: sorted(run.constraintReview.pending) },
     changes: unique(run.changes.map((c) => ({ id: c.id, fingerprint: c.fingerprint }))),
     relations: unique(run.relations.map((r) => relation(r.id))),
     findings: unique(run.findings.map((f) => ({ change: f.changeId, ref: f.refId, status: f.status,

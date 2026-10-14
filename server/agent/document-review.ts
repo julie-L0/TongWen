@@ -315,7 +315,11 @@ export function reviewDocument(
     }
     if (omitted.length)
       fail('SOURCE_OBLIGATION_GAP', '每个来源条件、定义、例外与边界必须分别交代，整段笼统复核不能替代条款核对。', 400, {
-        missingObligations: omitted, committed: false,
+        missingObligations: omitted,
+        fragmentOnlyExclusions: combined.filter(check => check.outcome === 'not_applicable' && check.scope !== 'document')
+          .map(check => ({ changeId: check.changeId, obligationId: check.obligationId, targetRefIds: check.targetRefIds })),
+        repair: '重复拆分同样obligationIds不能修复此缺口。not_applicable+fragment只排除片段。按真实全文和用途判断：整文确无该条款义务时，用not_applicable、scope=document、targetRefIds=[purpose.refId]；否则继续真实承载点的current/patched/unresolved。不可把实际规则或缺证改成无关。mode=append可保存有效部分。',
+        committed: false,
       });
     fail('DOCUMENT_REVIEW_GAP', '尚有变化或有效提案未在文档复核中交代。', 400, {
       uncheckedChanges,

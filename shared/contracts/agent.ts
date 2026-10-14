@@ -65,6 +65,10 @@ export type Finding = {
   relationIds: string[];
   reason: string;
   differenceId?: string;
+  scopeBasis?: 'current_source' | 'source_exception' | 'needs_definition';
+  scopeWitness?: SourceQuote;
+  scopeBinding?: { basis: string; scopeId: string; scopeName: string; sourceMemberId: string;
+    sourceVersionId: string; sourceTitle: string; contextEvidenceIds: string[]; witness?: SourceQuote };
 };
 export type Difference = {
   id: string;
@@ -188,6 +192,7 @@ export type AgentReport = {
   id: string;
   status: RunStatus;
   inputValid: boolean;
+  configurationValid?: boolean;
   strategyVersion?: string;
   executionIdentity?: ExecutionIdentity;
   rounds?: AgentRound[];

@@ -20,7 +20,7 @@ import { canonicalDifference } from './difference-identity.ts';
 import { reviewDocument } from './document-review.ts';
 import { documentReviewCoverage } from './draft-projection.ts';
 import { resolvePatchRequest } from './patch-request.ts';
-import { assertSourceChangeWitness, assertScopedChange } from './source-scope.ts';
+import { assertSourceChangeWitness, assertScopedChange, bindAnchorScope } from './source-scope.ts';
 import { sourceObligations } from './source-obligations.ts';
 
 function nextId(run: Run, prefix: string) {
@@ -131,6 +131,10 @@ export class AgentTools {
   private read(run: Run, args: any) {
     const depth = args.neighborDepth ?? 1;
     const wanted = args.refIds.map((id: string) => ref(run, id));
+    if (run.constraintReview?.pending.length && wanted.some((r: Ref) =>
+      r.memberId !== run.manifest.sourceMemberId && r.role !== 'anchor'))
+      fail('CONSTRAINT_REVIEW_SCOPE', '底本初判及理由复核阶段只读取当前来源和底本；目标资料在约束复核完成后读取。', 400,
+        { allowedRefIds: run.manifest.refs.filter(r => r.memberId === run.manifest.sourceMemberId || r.role === 'anchor').map(r => r.id), committed: false });
     const selected = new Map<string, Ref>();
     for (const r of wanted)
       for (const n of run.manifest.refs.filter(
@@ -349,6 +353,8 @@ export class AgentTools {
     return relation;
   }
   private findings(run: Run, args: any) {
+    if (run.constraintReview?.stage === 'reason_review' && run.constraintReview.pending.length && args.findings.length !== 1)
+      fail('CONSTRAINT_AUDIT_BATCH_SIZE', '理由复核一次只处理当前一项，其他待办后续由执行器提供。');
     const saved: Finding[] = [],
       errors: unknown[] = [];
     for (const [index, raw] of args.findings.entries()) {
@@ -362,6 +368,20 @@ export class AgentTools {
           relationIds: [...(raw.relationIds || [])],
         };
         const r = ref(run, input.refId);
+        const auditKey = `${input.changeId}:${input.refId}`;
+        if (run.constraintReview?.stage === 'reason_review' && run.constraintReview.pending.length) {
+          const current = run.findings.find(f => run.constraintReview!.pending.includes(`${f.changeId}:${f.refId}`));
+          if (auditKey !== `${current?.changeId}:${current?.refId}` || input.auditVerdict !== 'checked')
+            fail('CONSTRAINT_AUDIT_CURRENT_REQUIRED', '请只复核当前reasonAudit项，并给auditVerdict=checked。');
+        }
+        if (input.auditVerdict && (r.role !== 'anchor' || run.constraintReview?.stage !== 'reason_review' || !run.constraintReview.pending.includes(auditKey)))
+          fail('CONSTRAINT_AUDIT_NOT_PENDING', '当前不在该项理由复核阶段；初判请移除auditVerdict，按实际原文登记status/scopeBasis/reason。不能预先或跨对象确认。', 400,
+            { stage: run.constraintReview?.stage || 'initial', repair: 'remove auditVerdict for initial finding', committed: false });
+        if (r.role === 'anchor' && run.documentCoverageProtocol === 'scoped-v1') {
+          input.scopeBinding = bindAnchorScope(run, input);
+          input.evidenceIds = [...new Set([...input.evidenceIds, ...input.scopeBinding.contextEvidenceIds,
+            ...(input.scopeWitness ? [input.scopeWitness.evidenceId] : [])])];
+        }
         if (r.kind === 'blockquote') {
           const neighbors = run.manifest.refs
             .filter(
@@ -419,6 +439,10 @@ export class AgentTools {
           fail('RELATION_REQUIRED', '同步建议须有真实语义关系。');
         if (!input.reason.trim()) fail('INVALID_ARGUMENT', '判断必须说明依据。');
         const old = run.findings.find((f) => f.changeId === c.id && f.refId === r.id);
+        const reviewedAnchorChanged = r.role === 'anchor' && old && run.constraintReview?.stage === 'reason_review' &&
+          !run.constraintReview.pending.length && !input.auditVerdict &&
+          hash({ status: old.status, reason: old.reason, evidenceIds: old.evidenceIds }) !==
+          hash({ status: input.status, reason: input.reason, evidenceIds: input.evidenceIds });
         const f: Finding = { ...input, id: old?.id || nextId(run, 'F') };
         if (f.status === 'needs_update') {
           const d = this.makeDifference(run, c, [r], input.reason);
@@ -447,6 +471,14 @@ export class AgentTools {
             this.store.saveProposal(p);
           }
         saved.push(f);
+        if (reviewedAnchorChanged && run.constraintReview) {
+          run.constraintReview.pending = [auditKey];
+          delete run.constraintReview.completedAt;
+        }
+        if (input.auditVerdict === 'checked' && run.constraintReview) {
+          run.constraintReview.pending = run.constraintReview.pending.filter(key => key !== auditKey);
+          if (!run.constraintReview.pending.length) run.constraintReview.completedAt = new Date().toISOString();
+        }
       } catch (e) {
         if (!(e instanceof AppError)) throw e;
         errors.push({
