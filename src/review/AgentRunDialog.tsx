@@ -18,17 +18,21 @@ import './review-window.css';
 export default function AgentRunDialog({
   runId,
   onClose,
+  onMinimize,
   onWorkspace,
   beforeAction,
   onRun,
+  onComplete,
   minimized = false,
   onRestore,
 }: {
   runId: string;
   onClose: () => void;
+  onMinimize: () => void;
   onWorkspace: (snapshot: Snapshot) => void;
   beforeAction: () => Promise<void>;
   onRun: (runId: string) => void;
+  onComplete: (message: string) => void;
   minimized?: boolean;
   onRestore: () => void;
 }) {
@@ -138,7 +142,7 @@ export default function AgentRunDialog({
         title="修改检查"
         modal={false}
         className={`review-results ${!count ? 'review-compact' : ''}`}
-        closeLabel="收起检查，后台继续运行"
+        closeLabel="关闭检查窗口"
         onClose={onClose}
         footer={
           <>
@@ -160,9 +164,14 @@ export default function AgentRunDialog({
                   const result = await command(() => agentApi.apply(runId, ids, requestId()), reviewUpdate);
                   if (result) {
                     setSelected((current) => current.filter((id) => !ids.includes(id)));
-                    setFeedback(
-                      `已确认 ${ids.length} 项，保存并回读 ${result.batch?.operations.length || 0} 份文档；${running ? '其余文档继续检查。' : '其余提案保留。'}`,
-                    );
+                    setDetail(null);
+                    const message = `已确认 ${ids.length} 项，保存并回读 ${result.batch?.operations.length || 0} 份文档。`;
+                    const next = result.report;
+                    const complete = ['awaiting_review', 'no_changes'].includes(next.status) &&
+                      !next.proposals.some((p) => ['pending', 'deferred', 'needs_revalidation'].includes(p.state)) &&
+                      !next.conflicts.length && !next.unresolved.length;
+                    if (complete) onComplete(message + '可从修订记录查看或撤销。');
+                    else setFeedback(message + (['queued', 'running'].includes(next.status) ? '其余文档继续检查。' : '其余事项保留。'));
                   }
                 }}
               >
@@ -180,7 +189,7 @@ export default function AgentRunDialog({
                 重新检查
               </button>
             )}
-            <button className="quiet-button" onClick={onClose}>
+            <button className="quiet-button" onClick={onMinimize}>
               收起
             </button>
           </>

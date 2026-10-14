@@ -40,13 +40,13 @@
     "outputTokens": 48000
   },
   "acceptancePassed": false,
-  "frontendJsSha256": "28b75d6a06a154659978caa50af49a5f10b9aa523efdca9ab449706cc00429f5",
+  "frontendJsSha256": "4f96e3390046e50ee594576833e016848f7e1fb0e89d9126fc0acfcc012544d4",
   "syntheticDocuments": 6,
   "exampleHistory": false,
   "privateDailyDatabaseIncluded": false,
   "modelKeyIncluded": false,
   "createdAt": "2026-10-14T02:57:36.422Z",
-  "normalDemoUiPassed": true,
+  "normalDemoUiPassed": false,
   "normalDemoUiChecks": 48,
   "normalDemoUiRunId": "b4a67e01-25a5-44a1-bbcd-7c2b46766dfc",
   "recognitionWholeBusinessPassed": false,
@@ -59,8 +59,11 @@
   ],
   "demoProfile": "expense_only",
   "syntheticGroups": 1,
-  "frontendChange": "Copy clarification only: document roles and protection, personal workspace, generic model API configuration.",
+  "frontendChange": "Review completion, close versus minimize, and processed history state.",
   "normalEvidenceFrontendJsSha256": "03292536788242530a8c92fad349c3531d47e6e9ea928c3e489b641232bffcb9",
   "normalEvidenceVersion": "semantic-agent-0.26.32-candidate",
-  "newModelCalls": 0
+  "newModelCalls": 0,
+  "historicalNormalDemoUiPassed": true,
+  "reviewWindowUiValidated": true,
+  "localRehearsalIncluded": false
 }

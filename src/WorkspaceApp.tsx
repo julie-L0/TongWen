@@ -448,11 +448,17 @@ export default function WorkspaceApp() {
           key={runId}
           runId={runId}
           minimized={reviewMinimized}
-          onClose={() => setReviewMinimized(true)}
+          onClose={() => { setRunId(''); setReviewMinimized(false); }}
+          onMinimize={() => setReviewMinimized(true)}
           onRestore={() => setReviewMinimized(false)}
           beforeAction={w.flush}
           onWorkspace={(s) => w.synchronize(s)}
           onRun={(id) => { setRunId(id); setReviewMinimized(false); }}
+          onComplete={(message) => {
+            setRunId('');
+            setReviewMinimized(false);
+            setNotice(message);
+          }}
         />
       )}
       {modal === 'runs' && (
