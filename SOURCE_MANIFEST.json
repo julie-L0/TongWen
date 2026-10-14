@@ -49,6 +49,26 @@
       "sha256": "c6a76df4eeccb7b7c5131237467036572205a7f9d1cc6875ee49617f1f3afe50"
     },
     {
+      "file": "docs/download-verification.json",
+      "bytes": 228,
+      "sha256": "b94180eabacb5da55bf41ae2eaa58f38af598b01eef3b5334c18635a57cf18bf"
+    },
+    {
+      "file": "docs/historical-02615-normal-proof.json",
+      "bytes": 4127,
+      "sha256": "3fdfb293e982ef00aa034a4517ef8a85d0bc753c49cbfd13e274d4c40bc46633"
+    },
+    {
+      "file": "docs/historical-02615-proposal.png",
+      "bytes": 112484,
+      "sha256": "83fb27ab11e0f4a45a6811b93ef35e8e08d006d0d517ce9af876019939c6a193"
+    },
+    {
+      "file": "docs/historical-02615-undo.png",
+      "bytes": 95621,
+      "sha256": "2402a4dae144e76ed0ffa971eeb5a01621bdf508717159b2bc6ce1410defc726"
+    },
+    {
       "file": "examples/seed-materials.json",
       "bytes": 35541,
       "sha256": "c8e0f93dfe09c35173a76336d755fa1a14a120b87aa1661a9139d9c1d7e5a2ad"
@@ -75,8 +95,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 3469,
-      "sha256": "cce64fa262518aeec6e323c1c714ec4b5c677216a2dbcf43a37889fcc391b2d2"
+      "bytes": 5269,
+      "sha256": "81df24eb1a338e66722df0219e92e597c605d25b1ab35b4d1a5ad6e77eabad1e"
     },
     {
       "file": "releases/tongwen-demo-backup-02615.zip",
