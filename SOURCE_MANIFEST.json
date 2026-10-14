@@ -148,8 +148,8 @@
     },
     {
       "file": "package.source.json",
-      "bytes": 982,
-      "sha256": "5663ecbdf7d8f1438d914bb83c55105077ef16dd3b5f5a3922d8c181abbb902a"
+      "bytes": 2309,
+      "sha256": "aadd31151aa20e0aaddbcfcafc8441fbb9dade52cf098d03aa9a33eedc21f327"
     },
     {
       "file": "pnpm-lock.yaml",
@@ -158,8 +158,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 3160,
-      "sha256": "c25c11385b9c3ed03de1eb881d8971a339101f966b8726dffec390867d22c44f"
+      "bytes": 3386,
+      "sha256": "33cadefbb577e83566b5de9e748442c8c94471670163fa8a7f34e03b7e1e492c"
     },
     {
       "file": "releases/tongwen-demo-backup-02615.zip",

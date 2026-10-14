@@ -10,7 +10,7 @@
 2. 在仓库目录执行 `npm install --omit=dev --ignore-scripts`，然后执行 `npm start`。
 3. 打开 http://127.0.0.1:3010/ 。第一次启动只初始化本目录的新合成资料库，随后启动保留自己的编辑和记录。
 
-需要真实模型检查时，将 `.env.example` 复制为 `.env`，按示例填写自己的模型 API key。没有 key 时可以浏览、编辑、保存和查看版本；密钥只保存在本机后端。
+需要使用模型检查时，将 `.env.example` 复制为 `.env`，自行配置模型 API key。没有 key 时可以浏览、编辑、保存和查看版本；密钥只保存在本机后端。
 
 ![个人工作台与文档角色说明](docs/personal-workbench-ui.png)
 
@@ -31,6 +31,8 @@
 当前是个人原型，金额流程仅单次验证，重复稳定性、PDF与澄清续跑尚未完成本次完整验收。编辑、版本、确认与撤销按文档保护规则执行。
 
 ## 开发与历史
+
+[已确认段落关系复用小样](https://github.com/julie-L0/TongWen/tree/codex/confirmed-relation-demo)位于独立分支，使用两篇单段合成资料和独立资料库。其单次对照结果与启动说明见分支 README。
 
 `src`是React界面，`server/bootstrap.ts`是服务入口，`server/agent`是模型与工具循环，`shared`是接口类型。`dist-v2`为已构建界面。重建界面时将`package.source.json`另存为`package.json`，安装开发依赖后执行`npm run build:ui`。
 
